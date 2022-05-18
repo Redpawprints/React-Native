@@ -4,8 +4,8 @@ import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
 import Constants from 'expo-constants';
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
-import { createStackNavigator, DrawerItems } from 'react-navigation-stack';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import SafeAreaView from 'react-native-safe-area-view';
@@ -188,6 +188,7 @@ const MainNavigator = createDrawerNavigator(
     },
     {
         drawerBackgroundColor: '#CEC8FF',
+        contentComponent: CustomDrawerContentComponent
     }
 );
 
