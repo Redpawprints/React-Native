@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList, Modal, Button, StyleSheet } from 'react-native';
 import { Card, Icon, Input, Rating } from 'react-native-elements';
-import { CAMPSITES } from '../shared/campsites';
-import { COMMENTS } from '../shared/comments';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-import { postFavorite } from '../redux/ActionCreators';
-import { set } from 'react-native-reanimated';
+import { postFavorite, postComment } from '../redux/ActionCreators';
 
 
 const mapStateToProps = state => {
@@ -18,7 +15,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    postFavorite: campsiteId => (postFavorite(campsiteId))
+    postFavorite: campsiteId => (postFavorite(campsiteId)),
+    postComment: (campsiteId, author, rating, text) => (postComment(campsiteId, rating, author, text))
 };
 
 function RenderCampsite(props) {
@@ -65,8 +63,13 @@ function RenderComments({comments}) {
         return (
             <View style={{margin: 10}}>
                 <Text style= {{fontSize: 14}}>{item.text}</Text>
-                <Rating style={{fontSize: 12, alignItems: 'flex-start', paddingVertical: '5%'}} readonly startingValue={item.rating} imageSize={10}>{item.rating} Stars</Rating>
-                <Text style={{fontSize: 12}}>{`- ${item.author}, ${item.date}`}</Text>
+                <Rating 
+                    style={{alignItems: 'flex-start', paddingVertical: '5%'}}
+                    readonly
+                    startingValue={item.rating}
+                    imageSize={10}    
+                />
+                <Text style={{fontSize: 12}}>{`-- ${item.author}, ${item.date}`}</Text>
             </View>
         );
     }
@@ -97,18 +100,18 @@ class CampsiteInfo extends Component {
         this.setState({showModal: !this.state.showModal});
     }
 
-    handleComment() {
-        console.log(JSON.stringify(this.state));
-        this.toggleModal();
+    handleComment(campsiteId) {
+        this.props.postComment(campsiteId, this.state.rating, this.state.author, this.state.text)
+        this.toggleModal(campsiteId);
     }
 
     resetForm() {
-        setState({
+        this.setState({
             rating: 5,
             author: '',
             text: '',
             showModal: false
-        })
+        });
     }
 
     static navigationOptions = {
@@ -136,7 +139,7 @@ class CampsiteInfo extends Component {
                         transparent={false}
                         visible={this.state.showModal}
                         onRequestClose={() => this.toggleModal()}
-                        style={styles.modal}>
+                        >
                         <View
                             style={styles.modal}
                         >
@@ -147,10 +150,24 @@ class CampsiteInfo extends Component {
                                 onFinishRating={rating => this.setState({rating: rating})}
                                 style={{paddingVertical: 10}}
                             />
-                            <View style={styles.cardRow}>
+                            <Input
+                                placeholder='Author'
+                                leftIcon={{ type: 'font-awesome', name:'user-o'}}
+                                leftIconContainerStyle={{paddingRight: 10}}
+                                onChangeText={author => this.setState({ author: author})}
+                                value={this.state.author}
+                            />
+                            <Input
+                                placeholder='Comment'
+                                leftIcon={{ type: 'font-awesome', name: 'comment-o'}}
+                                leftIconContainerStyle={{paddingRight: 10}}
+                                onChangeText={text => this.setState({ text: text})}
+                                value={this.state.text}
+                            />
+                            <View style={{margin: 10}}>
                                 <Button
                                     onPress={() => {
-                                        this.handleComment({campsiteId});
+                                        this.handleComment(campsiteId);
                                         this.resetForm();
                                     }}
                                     title='Submit'
