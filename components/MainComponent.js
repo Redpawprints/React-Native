@@ -13,8 +13,7 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import { connect } from 'react-redux';
 import Reservation from './ReservationComponent';
-import { fetchCampsites, fetchComments, fetchPromotions,
-    fetchPartners } from '../redux/ActionCreators';
+import { fetchCampsites, fetchComments, fetchPromotions,fetchPartners } from '../redux/ActionCreators';
 import Favorites from './FavoritesComponent';
 
 
@@ -233,7 +232,7 @@ const MainNavigator = createDrawerNavigator(
         Favorites: {
             screen: FavoritesNavigator,
             navigationOptions: {
-                drawerLabel: 'MyFavorites',
+                drawerLabel: 'My Favorites',
                 drawerIcon: ({tintColor}) => (
                     <Icon
                         name='heart'
