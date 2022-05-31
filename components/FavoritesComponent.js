@@ -43,7 +43,7 @@ class Favorites extends Component {
                                     [
                                         {
                                             text: 'Cancel',
-                                            onPress: () => console.log(item.name + 'Not Deleted'),
+                                            onPress: () => console.log(item.name + ' Not Deleted'),
                                             style: 'cancel'
                                         },
                                         {
@@ -56,7 +56,7 @@ class Favorites extends Component {
                             }
                         >
                         <Text style={styles.deleteText}>Delete</Text>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                     </View>
 
                     <View>
