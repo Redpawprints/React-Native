@@ -85,16 +85,14 @@ class Reservation extends Component {
                             style={styles.formItem}
                         />
                     )}
-                    
+                    <View style={styles.formRow}>
                         <Button
                             onPress={() => 
                                 Alert.alert(
                                     'Begin Search?',
                                     'Number of Campers: ' + this.state.campers +
-                                    'Hike-In? ' + !this.state.hikeIn,
-                                    
-                                    ( ' Date: ' + this.state.date.toLocaleDateString('en-US'))
-                                    ,
+                                    ' Hike-In? ' + !this.state.hikeIn +
+                                    ' Date: ' + this.state.date.toLocaleDateString('en-US'),
                                     [
                                         {
                                             text: 'Cancel',
@@ -112,7 +110,7 @@ class Reservation extends Component {
                             color='#5637DD'
                             accessibilityLabel='Tap me to search for available campsites to reserve'
                         ></Button>
-                       
+                    </View>    
                 </Animatable.View>                
             </ScrollView>
         );
