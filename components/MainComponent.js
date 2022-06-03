@@ -32,7 +32,8 @@ const LoginNavigator = createStackNavigator(
             },
             headerLeft: <Icon
             name='sign-in'
-            iconStyle={styles.container.stackIcon}
+            type='font-awesome'
+            iconStyle={styles.stackIcon}
             onPress={() => navigation.toggleDrawer()}
             />
         })
