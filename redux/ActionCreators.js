@@ -153,7 +153,7 @@ export const addFavorite = campsiteId => ({
     payload: campsiteId
 });
 
-export const postComment = (campsiteId, text, rating, author) => dispatch => {
+export const postComment = (campsiteId, rating, author, text) => dispatch => {
     const newComment = {
         campsiteId,
         rating,
